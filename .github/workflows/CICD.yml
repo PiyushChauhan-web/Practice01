@@ -3,7 +3,7 @@ name: CICD
 
 # Manual click(Deliver) workflow whenever needs
 on:
-workflow_dispatch:
+ workflow_dispatch:
 
 jobs:
 
