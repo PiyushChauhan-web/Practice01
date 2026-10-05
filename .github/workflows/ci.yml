@@ -1,33 +1,31 @@
 name: Docker CI/CD Practice
 
 on:
- push: 
-  branches: [main]
+  push:
+    branches: [main]
 
 jobs:
-  checkout:
-   runs-on: ubuntu-latest
-   steps:
-     - name: Checkout the repository code
-       run: ls -l
-  build:
+  build-test-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Building the Docker image
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Show repository files
+        run: ls -la
+
+      - name: Build Docker image
         run: docker build -t practice:01 .
 
-      - name: Creating the container
-        run: docker run -d --name site -p 8080:80 practice_1.1
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Testing the page responds
-        run: echo"testing the page loading..."
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploing the application
-        run: echo "Deploying the APP!!"
+      - name: Create and run container
+        run: docker run -d --name site -p 8080:80 practice:01
 
-    
+      - name: Verify container is running
+        run: docker ps
 
+      - name: Test page response
+        run: curl --fail http://localhost:8080
+
+      - name: Deploy application
+        run: echo "Deployment step would run here"
