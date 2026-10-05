@@ -1,0 +1,33 @@
+name: Docker CI/CD Practice
+
+on:
+ push: 
+  branches: [main]
+
+jobs:
+  checkout:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout the repository code
+       run: ls -l
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Building the Docker image
+        run: docker build -t practice:01 .
+
+      - name: Creating the container
+        run: docker run -d --name site -p 8080:80 practice_1.1
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testing the page responds
+        run: echo"testing the page loading..."
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploing the application
+        run: echo "Deploying the APP!!"
+
+    
+
